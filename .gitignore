@@ -1,0 +1,41 @@
+# IDE settings
+.vscode/
+.idea/
+.vs/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+**/bin/
+**/obj/
+**/x64/
+**/x86/
+**/build/
+**/bld/
+**/out/
+
+# Logs
+*.log
+**/*.log
+
+# NuGet artifacts
+*.nupkg
+project.lock.json
+**/project.assets.json
+**/project.nuget.cache
+**/*.nuget.g.props
+**/*.nuget.g.targets
+*.nuget.props
+*.nuget.targets
+
+# Misc
+*.swp
+*.*~
+.DS_Store
+
+# Database
+database/
