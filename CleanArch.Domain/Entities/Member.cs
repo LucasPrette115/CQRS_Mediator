@@ -17,7 +17,7 @@ public sealed class Member : Entity
 
     public Member(Guid id, string? firstName, string? lastName, string? email, string? gender, bool? isActive)
     {
-        DomainValidation.When(id == Guid.Empty, "Invalid Id.");
+        DomainValidation.When(id == Guid.Empty, "Invalid Id");
         Id = id;
         ValidateDomain(firstName, lastName, email, gender, isActive);
     }
