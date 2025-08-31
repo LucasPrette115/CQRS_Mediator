@@ -5,20 +5,20 @@ namespace CleanArch.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class MembersController(IUnitOfWork unitOfWork) : ControllerBase
+    public class MembersController(IMemberRepository memberRepository) : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        private readonly IMemberRepository _memberRepository = memberRepository;
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var members = await _unitOfWork.MemberRepository.GetAllAsync();
+            var members = await _memberRepository.GetAllAsync();
             return Ok(members);
         }
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            var member = await _unitOfWork.MemberRepository.GetByIdAsync(id);
+            var member = await _memberRepository.GetByIdAsync(id);
             if (member == null) return NotFound();
             return Ok(member);
         }       

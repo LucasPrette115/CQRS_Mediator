@@ -4,21 +4,12 @@ using CleanArch.Infrastructure.Context;
 namespace CleanArch.Infrastructure.Repositories
 {
     public class UnitOfWork(AppDbContext context) : IUnitOfWork, IDisposable
-    {
-        private IMemberRepository? _memberRepository;
-        private readonly AppDbContext _context = context;
+    {       
+        private readonly AppDbContext _context = context;       
 
-        public IMemberRepository MemberRepository
+        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
-            get
-            { 
-                return _memberRepository ??= new MemberRepository(_context); 
-            }
-        }
-
-        public Task CommitAsync()
-        {
-            throw new NotImplementedException();
+            return await _context.SaveChangesAsync(cancellationToken);
         }
 
         public void Dispose()
