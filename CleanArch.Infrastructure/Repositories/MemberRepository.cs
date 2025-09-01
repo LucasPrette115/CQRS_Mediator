@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Abstractions.Repositories;
+using CleanArch.Domain.Common;
 using CleanArch.Domain.Entities;
 using CleanArch.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -28,12 +29,36 @@ namespace CleanArch.Infrastructure.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<Member>> FilterAll(Expression<Func<Member, bool>> func)
+        public async Task<PagedResult<Member>> FilterAllAsync(
+            Expression<Func<Member, bool>> predicate,
+            int? page = null,
+            int? pageSize = null,
+            bool? nonPaged = null)
         {
-            ArgumentNullException.ThrowIfNull(func);
+            ArgumentNullException.ThrowIfNull(predicate);
+
+            var query = _dbSet.Where(predicate);
+
+            var totalCount = await query.CountAsync();
+         
+            if (nonPaged != true && page.HasValue && pageSize.HasValue)
+            {
+                query = query
+                    .Skip((page.Value - 1) * pageSize.Value)
+                    .Take(pageSize.Value);
+            }
+
+            var items = await query.ToListAsync();
             
-            return await _dbSet.Where(func).ToListAsync();
+            return new PagedResult<Member>(
+                page ?? 1,
+                pageSize ?? (nonPaged == true ? totalCount : items.Count),
+                totalCount,
+                nonPaged,
+                items);
         }
+
+
 
         public async Task<IEnumerable<Member>> GetAllAsync()
         {

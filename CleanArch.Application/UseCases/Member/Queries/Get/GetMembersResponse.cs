@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CleanArch.Application.UseCases.Member.Queries.Get
+﻿namespace CleanArch.Application.UseCases.Member.Queries.Get
 {
-    public class GetMembersResponse
+    public class GetMembersResponse(Guid id, string? firstName, string? lastName, string? email, string? gender, bool? isActive)
     {
+        public Guid Id { get; private set; } = id;
+        public string? FirstName { get; private set; } = firstName;
+        public string? LastName { get; private set; } = lastName;
+        public string? Email { get; private set; } = email;
+        public string? Gender { get; private set; } = gender;
+        public bool? IsActive { get; private set; } = isActive;
     }
 }
