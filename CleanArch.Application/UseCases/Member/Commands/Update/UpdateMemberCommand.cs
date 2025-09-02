@@ -3,13 +3,13 @@ using Mediator.Abstractions;
 
 namespace CleanArch.Application.UseCases.Member.Commands.Update
 {
-    public class UpdateMemberCommand(Guid id, string? firstName, string? lastName, string? email, string? gender, bool? isActive) : IRequest<Result<UpdateMemberResponse>>
+    public class UpdateMemberCommand : IRequest<Result<UpdateMemberResponse>>
     {
-        public Guid Id { get; private set; } = id;
-        public string? FirstName { get; private set; } = firstName;
-        public string? LastName { get; private set; } = lastName;
-        public string? Email { get; private set; } = email;
-        public string? Gender { get; private set; } = gender;
-        public bool? IsActive { get; private set; } = isActive;
+        public Guid Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Email { get; set; }
+        public string? Gender { get; set; }
+        public bool? IsActive { get; set; }
     }
 }

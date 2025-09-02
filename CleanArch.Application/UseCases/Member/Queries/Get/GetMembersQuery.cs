@@ -4,24 +4,17 @@ using Mediator.Abstractions;
 
 namespace CleanArch.Application.UseCases.Member.Queries.Get
 {
-    public class GetMembersQuery(
-        Guid id, 
-        string? firstName, 
-        string? lastName, 
-        string? email, 
-        string? gender, 
-        bool? isActive        
-        ) : IRequest<PagedResult<GetMembersResponse>>
+    public class GetMembersQuery : IRequest<PagedResult<GetMembersResponse>>
     {
-        public Guid Id { get; private set; } = id;
-        public string? FirstName { get; private set; } = firstName;
-        public string? LastName { get; private set; } = lastName;
-        public string? Email { get; private set; } = email;
-        public string? Gender { get; private set; } = gender;
-        public bool? IsActive { get; private set; } = isActive;
-        public int PageNumber { get; private set; } = 1;
-        public int PageSize { get; private set; } = 10;        
-        public bool NonPaged { get; private set; } = false;
+        public Guid Id { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+        public string? Email { get; set; }
+        public string? Gender { get; set; }
+        public bool? IsActive { get; set; }
+        public int PageNumber { get; set; } = 1;
+        public int PageSize { get; set; } = 10;        
+        public bool NonPaged { get; set; } = false;
 
     }
 }

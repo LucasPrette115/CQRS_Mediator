@@ -21,8 +21,14 @@ public sealed class Member : Entity
         Id = id;
         ValidateDomain(firstName, lastName, email, gender, isActive);
     }
-    
-        
+
+    public void Delete()
+    {
+        IsActive = false;
+        DeletedAt = DateTime.Now;
+    }
+
+
 
     private void ValidateDomain(string? firstName, string? lastName, string? email, string? gender, bool? isActive)
     {

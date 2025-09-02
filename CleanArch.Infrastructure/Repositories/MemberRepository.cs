@@ -67,7 +67,7 @@ namespace CleanArch.Infrastructure.Repositories
 
         public async Task<Member> GetByIdAsync(Guid id)
         {
-            var member = await _dbSet.FirstOrDefaultAsync(x => x.Id == id) 
+            var member = await _dbSet.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id) 
                 ?? throw new InvalidOperationException("Member not found");
 
             return member;
