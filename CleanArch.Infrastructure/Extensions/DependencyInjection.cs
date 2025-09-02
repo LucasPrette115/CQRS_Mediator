@@ -14,6 +14,7 @@ namespace CleanArch.Infrastructure.Extensions
             IConfiguration configuration)
         {
             var mySqlConnectionString = configuration.GetConnectionString("DefaultConnection");
+
             services.AddDbContext<AppDbContext>(options =>
                 options.UseMySql(mySqlConnectionString, ServerVersion.AutoDetect(mySqlConnectionString)));
 
