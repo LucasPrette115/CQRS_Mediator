@@ -1,11 +1,14 @@
 ﻿using CleanArch.Application.UseCases.Member.Commands.Create;
+using CleanArch.Application.UseCases.Member.Commands.Login;
 using CleanArch.Application.UseCases.Member.Commands.Update;
 using CleanArch.Application.UseCases.Member.Queries.Get;
 using Mediator.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArch.Api.Controllers
 {
+    [Authorize]
     [Route("api")]
     [ApiController]
     public class MembersController(IMediator mediator) : ControllerBase
@@ -18,7 +21,7 @@ namespace CleanArch.Api.Controllers
             var members = await _mediator.SendAsync(request);
             return Ok(members);
         }
-
+        
         [HttpGet("getMemberById/{id:guid}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
@@ -29,6 +32,17 @@ namespace CleanArch.Api.Controllers
                 return NotFound();
 
             return Ok(result.Result);
+        }
+        [AllowAnonymous]
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginMember([FromBody] LoginCommand request)
+        {
+            var tokenResult = await _mediator.SendAsync(request);
+
+            if (!tokenResult.Success)
+                return UnprocessableEntity(tokenResult.Errors);
+
+            return Ok(tokenResult);
         }
 
         [HttpPost("createMember")]

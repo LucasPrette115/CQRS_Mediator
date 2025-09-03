@@ -1,4 +1,5 @@
 ﻿using CleanArch.Domain.Entities.Validation;
+using CleanArch.Domain.Helpers;
 
 namespace CleanArch.Domain.Entities;
 
@@ -34,7 +35,7 @@ public sealed class Member : Entity
     {
         DomainValidation.When(string.IsNullOrEmpty(firstName), "First name is required.");
         DomainValidation.When(string.IsNullOrEmpty(lastName), "Last name is required.");
-        DomainValidation.When(string.IsNullOrEmpty(email), "Email is required.");     
+        EmailValidator.IsValid(email);
         DomainValidation.When(string.IsNullOrEmpty(gender), "Gender is required.");
         DomainValidation.When(!isActive.HasValue, "Member must be active or inactive");
 
