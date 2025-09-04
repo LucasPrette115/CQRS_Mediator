@@ -4,14 +4,17 @@ using Microsoft.Extensions.Options;
 
 namespace CleanArch.Api.OptionsSetup
 {
-    public class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions) : IConfigureOptions<JwtBearerOptions>
+    public class JwtBearerOptionsSetup(IOptions<JwtOptions> jwtOptions) : IConfigureNamedOptions<JwtBearerOptions>
     {
         private readonly JwtOptions _jwtOptions = jwtOptions.Value;
+
         public void Configure(JwtBearerOptions options)
+        => Configure(Options.DefaultName, options);
+        public void Configure(string? name, JwtBearerOptions options)
         {
             options.TokenValidationParameters = new()
             {
-                ValidateIssuer = true,
+                ValidateIssuer = true,  
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
@@ -20,7 +23,7 @@ namespace CleanArch.Api.OptionsSetup
                 IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
                     System.Text.Encoding.UTF8.GetBytes(_jwtOptions.SecretKey))
 
-            };
-        }
+            };            
+        }        
     }
 }

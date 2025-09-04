@@ -25,26 +25,35 @@ builder.Services.AddSwaggerGen(c =>
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "bearer",
-        BearerFormat = "JWT"
+        BearerFormat = "JWT",
+        Reference = new OpenApiReference
+        {
+            Type = ReferenceType.SecurityScheme,
+            Id = "Bearer"
+        }
     };
 
     c.AddSecurityDefinition("Bearer", securityScheme);
 
     var securityRequirement = new OpenApiSecurityRequirement
     {
-        { securityScheme, new[] { "Bearer" } }
+        {
+            securityScheme,
+            Array.Empty<string>()
+        }
     };
     c.AddSecurityRequirement(securityRequirement);
 });
 
-builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer();
 
-builder.Services.ConfigureOptions<JwtOptionsSetup>();
-builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
 builder.Services.AddAuthorization();
 
 
@@ -64,8 +73,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.UseHttpsRedirection();
-app.UseAuthorization();
 app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
