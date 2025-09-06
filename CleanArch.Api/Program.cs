@@ -45,7 +45,6 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 });
 
-builder.Services.AddSingleton<IJwtProvider, JwtProvider>();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 builder.Services.ConfigureOptions<JwtOptionsSetup>();

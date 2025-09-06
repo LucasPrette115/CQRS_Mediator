@@ -19,7 +19,8 @@ namespace CleanArch.Application.UseCases.Member.Commands.Update
                     request.Id, 
                     request.FirstName, 
                     request.LastName, 
-                    request.Email, 
+                    request.Email,
+                    member.Password,
                     request.Gender, 
                     request.IsActive);
 
